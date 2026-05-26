@@ -118,6 +118,7 @@ FPS=30 QUALITY=85 OUTPUT="Virtual-1" ./start.sh              # padrão
 ```
 
 ## Estrutura do projeto
+```bash
 linuxdesk/
 ├── daemon/
 │   ├── server.py          # servidor TCP — captura e envia frames
@@ -136,7 +137,7 @@ linuxdesk/
 ├── start.sh               # inicializador do servidor
 ├── install.sh             # instalador automático
 └── README.md
-
+```
 ## Compatibilidade
 
 | Compositor | Status |
