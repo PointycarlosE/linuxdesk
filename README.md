@@ -2,6 +2,7 @@
 
 > Use seu Android como segundo monitor no Linux via cabo USB — sem Wi-Fi, sem latência alta.
 
+[![GitHub Stars](https://img.shields.io/github/stars/PointycarlosE/linuxdesk?style=flat-square)](https://github.com/PointycarlosE/linuxdesk/stargazers)
 ![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Android-blue)
 ![Compositor](https://img.shields.io/badge/compositor-Niri%20%7C%20Wayland-green)
 ![Distro](https://img.shields.io/badge/distro-CachyOS-orange)
