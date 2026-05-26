@@ -1,0 +1,25 @@
+{
+  "id": "linuxdesk",
+  "name": "LinuxDesk",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.0.0",
+  "author": "carlos",
+  "license": "MIT",
+  "repository": "local",
+  "description": "Use your Android phone as a second monitor via USB",
+  "tags": [
+    "Bar",
+    "System",
+    "Utility"
+  ],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {}
+  }
+}

@@ -1,0 +1,39 @@
+#!/bin/bash
+# LinuxDesk profile switcher
+# Uso: linuxdesk-switch on | off
+
+ACTION="${1:-on}"
+
+if [ "$ACTION" = "on" ]; then
+    # Carrega vkms se não estiver carregado
+    if ! lsmod | grep -q vkms; then
+        sudo modprobe vkms
+        sleep 1
+    fi
+
+    # Aplica perfil LinuxDesk no Monique
+    monique --switch-profile LinuxDesk
+
+    # Aguarda o Virtual-1 aparecer
+    sleep 2
+
+    # Inicia o servidor em background
+    pkill -f "server.py" 2>/dev/null
+    OUTPUT="Virtual-1" FPS=30 QUALITY=80 \
+        bash ~/linuxdesk/start.sh &> /tmp/linuxdesk.log &
+
+    echo "LinuxDesk iniciado!"
+
+elif [ "$ACTION" = "off" ]; then
+    # Para o servidor
+    pkill -f "server.py" 2>/dev/null
+
+    # Aplica perfil Notebook
+    monique --switch-profile Notebook
+
+    # Remove o vkms
+    sleep 1
+    sudo modprobe -r vkms 2>/dev/null
+
+    echo "LinuxDesk parado!"
+fi

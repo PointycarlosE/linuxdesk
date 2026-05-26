@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LinuxDesk</string>
+    <string name="connect">Conectar</string>
+    <string name="disconnect">Desconectar</string>
+    <string name="connecting">Conectando...</string>
+</resources>
