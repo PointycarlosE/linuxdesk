@@ -74,9 +74,15 @@ chmod +x ~/.local/bin/linuxdesk-switch
 
 ### 5. App Android
 
+**Opção 1 — Direto no dispositivo (mais fácil):**
+1. Acesse a [página de Releases](https://github.com/PointycarlosE/linuxdesk/releases)
+2. Baixe o `linuxdesk.apk` direto no celular/tablet
+3. Abra o arquivo e instale
+4. Ative "Instalar de fontes desconhecidas" se solicitado
+
+**Opção 2 — Via ADB (requer cabo USB no Linux):**
 ```bash
-# Conecte o Android via USB com depuração ativada
-adb install android-app/linuxdesk.apk
+adb install linuxdesk.apk
 ```
 
 ### 6. Plugin Noctalia (opcional)
@@ -138,19 +144,6 @@ linuxdesk/
 ├── install.sh             # instalador automático
 └── README.md
 ```
-## Compatibilidade
-
-| Compositor | Status |
-|---|---|
-| Niri | ✅ Testado |
-| Sway | ⚠️ Não testado |
-| Hyprland | ⚠️ Não testado |
-
-| Distro | Status |
-|---|---|
-| CachyOS | ✅ Testado |
-| Arch Linux | ⚠️ Deve funcionar |
-| EndeavourOS | ⚠️ Não testado |
 
 ## Roadmap
 
