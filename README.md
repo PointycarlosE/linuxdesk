@@ -1,24 +1,24 @@
-# LinuxDesk 📱→🖥️
+ LinuxDesk 📱→🖥️
 
 > Use seu Android como segundo monitor no Linux via cabo USB — sem Wi-Fi, sem latência alta.
 
-[![GitHub Stars](https://img.shields.io/github/stars/PointycarlosE/linuxdesk?style=flat-square)](https://github.com/PointycarlosE/linuxdesk/stargazers)
-![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Android-blue)
+[![Estrelas do GitHub](https://img.shields.io/github/stars/PointycarlosE/linuxdesk?style=flat-square)](https://github.com/PointycarlosE/linuxdesk/stargazers)
+![Plataforma](https://img.shields.io/badge/platform-Linux%20%7C%20Android-blue)
 ![Compositor](https://img.shields.io/badge/compositor-Niri%20%7C%20Wayland-green)
 ![Distro](https://img.shields.io/badge/distro-CachyOS-orange)
-![License](https://img.shields.io/badge/license-MIT-lightgrey)
+![Licença](https://img.shields.io/badge/license-MIT-lightgrey)
 
-## Como funciona
+## Como função
 
 Niri (Wayland)
-→ grim (captura frames)
-→ Pillow (converte para JPEG)
+→ sombrerio (quadros de captura)
+→ Travesseiro (converte para JPEG)
 → servidor TCP Python (porta 7878)
 → cabo USB
-→ ADB reverse tunnel
-→ app Android (recebe e exibe os frames)
+→ Túnel reverso ADB
+→ aplicativo Android (receber e exibir quadros)
 
-A vantagem sobre soluções Wi-Fi como o Spacedesk é usar **ADB reverse tunnel** — 
+A vantagem sobre soluções Wi-Fi como o Spacedesk é usar **Túnel reverso ADB** — 
 o dado trafega pelo cabo USB físico, resultando em latência muito menor (~5-15ms vs ~50-100ms).
 
 ## Requisitos
@@ -36,87 +36,87 @@ o dado trafega pelo cabo USB físico, resultando em latência muito menor (~5-15
 
 ## Instalação rápida
 
-```bash
-git clone https://github.com/PointycarlosE/linuxdesk
+```batedor
+clone git https://github.com/PointycarlosE/linuxdesk
 cd linuxdesk
-./install.sh
+./instalar.sh
 ```
 
-## Instalação manual
+## Manual de instalação
 
 ### 1. Dependências
 
-```bash
+```batedor
 sudo pacman -S grim android-tools python
-yay -S monique
+sim -S monique
 pip install --break-system-packages pillow evdev python-uinput
 ```
 
-### 2. vkms (monitor virtual no kernel)
+### 2. vkms (monitorar virtual sem kernel)
 
-```bash
-echo "vkms" | sudo tee /etc/modules-load.d/vkms.conf
+```batedor
+echo "vkms" | sudo tee/etc/modules-load.d/vkms.conf
 sudo modprobe vkms
 ```
 
 ### 3. sudoers
 
-```bash
+```batedor
 echo "$USER ALL=(ALL) NOPASSWD: /sbin/modprobe vkms, /sbin/modprobe -r vkms" | \
-    sudo tee /etc/sudoers.d/linuxdesk
+ Use seu Android como segundo monitor no Linux via cabo USB — sem Wi-Fi, sem latência alta.
 ```
 
-### 4. linuxdesk-switch no PATH
+### 4. linuxdesk-switch sem PATH
 
-```bash
-cp scripts/linuxdesk-switch ~/.local/bin/
+```batedor
+scripts cp/linuxdesk-switch ~/.local/bin/
 chmod +x ~/.local/bin/linuxdesk-switch
 ```
 
-### 5. App Android
+### 5. Aplicativo Android
 
-```bash
+```batedor
 # Conecte o Android via USB com depuração ativada
-adb install android-app/linuxdesk.apk
+adb instalar android-app/linuxdesk.apk
 ```
 
 ### 6. Plugin Noctalia (opcional)
 
-```bash
+```batedor
 mkdir -p ~/.config/noctalia/plugins/linuxdesk
 cp -r noctalia-plugin/* ~/.config/noctalia/plugins/linuxdesk/
 ```
 
-Adicione ao `~/.config/noctalia/plugins.json`:
+ CachyOS / Arch Linux Use seu Android como segundo monitor no Linux via cabo USB — sem Wi-Fi, sem latência alta.~/.config/noctalia/plugins.json`:
 ```json
 "linuxdesk": {
-    "enabled": true,
-    "sourceUrl": "https://github.com/noctalia-dev/noctalia-plugins"
+    "habilitado": verdadeiro,
+    "fonteUrl": "https://github.com/noctalia-dev/noctalia-plugins"
 }
 ```
 
 ### 7. Perfis do Monique (opcional)
 
 Abra o Monique (`monique`), configure os dois monitores e salve dois perfis:
-- **Notebook** — só o monitor interno
-- **LinuxDesk** — monitor interno + Virtual-1 à direita
+- **Caderno** — só o monitor interno
+- **Mesa Linux** — monitor interno + Virtual-1 à direita
 
 ## Uso
 
 ### Com plugin Noctalia
-Clique no ícone LinuxDesk na barra → abre o app no Android → conecta automaticamente.
+Clique no ícone LinuxDesk na barra → abre o aplicativo no Android → conecta automaticamente.
 
 ### Sem Noctalia
-```bash
-linuxdesk-switch on   # liga
-linuxdesk-switch off  # desliga
-```
+```batedor
+linuxdesk-switch ligado # liga
+linuxdesk-desligar # desliga
+batedor
 
 ### Opções avançadas
-```bash
-FPS=24 QUALITY=70 SCALE=0.75 OUTPUT="Virtual-1" ./start.sh  # menor latência
-FPS=30 QUALITY=85 OUTPUT="Virtual-1" ./start.sh              # padrão
-```
+```batedor
+ 2. vkms (monitorar virtual sem kernel)
+FPS=30 QUALIDADE=85 SAÚDE="Virtual-1" ./start.sh # padrão
+ 2. vkms (monitorar virtual sem kernel)
 
 ## Estrutura do projeto
 
