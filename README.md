@@ -8,17 +8,16 @@
 ![Distro](https://img.shields.io/badge/distro-CachyOS-orange)
 ![Licença](https://img.shields.io/badge/license-MIT-lightgrey)
 
-## Como função
-
+## Como funciona
 Niri (Wayland)
-→ sombrerio (quadros de captura)
-→ Travesseiro (converte para JPEG)
+→ grim (captura frames)
+→ Pillow (converte para JPEG)
 → servidor TCP Python (porta 7878)
 → cabo USB
-→ Túnel reverso ADB
-→ aplicativo Android (receber e exibir quadros)
+→ ADB reverse tunnel
+→ app Android (recebe e exibe os frames)
 
-A vantagem sobre soluções Wi-Fi como o Spacedesk é usar **Túnel reverso ADB** — 
+A vantagem sobre soluções Wi-Fi como o Spacedesk é usar **ADB reverse tunnel** — 
 o dado trafega pelo cabo USB físico, resultando em latência muito menor (~5-15ms vs ~50-100ms).
 
 ## Requisitos
@@ -36,91 +35,89 @@ o dado trafega pelo cabo USB físico, resultando em latência muito menor (~5-15
 
 ## Instalação rápida
 
-```batedor
-clone git https://github.com/PointycarlosE/linuxdesk
+```bash
+git clone https://github.com/PointycarlosE/linuxdesk
 cd linuxdesk
-./instalar.sh
+./install.sh
 ```
 
-## Manual de instalação
+## Instalação manual
 
 ### 1. Dependências
 
-```batedor
+```bash
 sudo pacman -S grim android-tools python
-sim -S monique
+yay -S monique
 pip install --break-system-packages pillow evdev python-uinput
 ```
 
-### 2. vkms (monitorar virtual sem kernel)
+### 2. vkms (monitor virtual no kernel)
 
-```batedor
-echo "vkms" | sudo tee/etc/modules-load.d/vkms.conf
+```bash
+echo "vkms" | sudo tee /etc/modules-load.d/vkms.conf
 sudo modprobe vkms
 ```
 
 ### 3. sudoers
 
-```batedor
+```bash
 echo "$USER ALL=(ALL) NOPASSWD: /sbin/modprobe vkms, /sbin/modprobe -r vkms" | \
- Use seu Android como segundo monitor no Linux via cabo USB — sem Wi-Fi, sem latência alta.
+    sudo tee /etc/sudoers.d/linuxdesk
 ```
 
-### 4. linuxdesk-switch sem PATH
+### 4. linuxdesk-switch no PATH
 
-```batedor
-scripts cp/linuxdesk-switch ~/.local/bin/
+```bash
+cp scripts/linuxdesk-switch ~/.local/bin/
 chmod +x ~/.local/bin/linuxdesk-switch
 ```
 
-### 5. Aplicativo Android
+### 5. App Android
 
-```batedor
+```bash
 # Conecte o Android via USB com depuração ativada
-adb instalar android-app/linuxdesk.apk
+adb install android-app/linuxdesk.apk
 ```
 
 ### 6. Plugin Noctalia (opcional)
 
-```batedor
+```bash
 mkdir -p ~/.config/noctalia/plugins/linuxdesk
 cp -r noctalia-plugin/* ~/.config/noctalia/plugins/linuxdesk/
 ```
 
- CachyOS / Arch Linux Use seu Android como segundo monitor no Linux via cabo USB — sem Wi-Fi, sem latência alta.~/.config/noctalia/plugins.json`:
+Adicione ao `~/.config/noctalia/plugins.json`:
 ```json
 "linuxdesk": {
-    "habilitado": verdadeiro,
-    "fonteUrl": "https://github.com/noctalia-dev/noctalia-plugins"
+    "enabled": true,
+    "sourceUrl": "https://github.com/noctalia-dev/noctalia-plugins"
 }
 ```
 
 ### 7. Perfis do Monique (opcional)
 
 Abra o Monique (`monique`), configure os dois monitores e salve dois perfis:
-- **Caderno** — só o monitor interno
-- **Mesa Linux** — monitor interno + Virtual-1 à direita
+- **Notebook** — só o monitor interno
+- **LinuxDesk** — monitor interno + Virtual-1 à direita
 
 ## Uso
 
 ### Com plugin Noctalia
-Clique no ícone LinuxDesk na barra → abre o aplicativo no Android → conecta automaticamente.
+Clique no ícone LinuxDesk na barra → abre o app no Android → conecta automaticamente.
 
 ### Sem Noctalia
-```batedor
-linuxdesk-switch ligado # liga
-linuxdesk-desligar # desliga
-batedor
+```bash
+linuxdesk-switch on   # liga
+linuxdesk-switch off  # desliga
+```
 
 ### Opções avançadas
-```batedor
- 2. vkms (monitorar virtual sem kernel)
-FPS=30 QUALIDADE=85 SAÚDE="Virtual-1" ./start.sh # padrão
- 2. vkms (monitorar virtual sem kernel)
+```bash
+FPS=24 QUALITY=70 SCALE=0.75 OUTPUT="Virtual-1" ./start.sh  # menor latência
+FPS=30 QUALITY=85 OUTPUT="Virtual-1" ./start.sh              # padrão
+```
 
 ## Estrutura do projeto
-
-```bash
 linuxdesk/
 ├── daemon/
 │   ├── server.py          # servidor TCP — captura e envia frames
@@ -139,7 +136,6 @@ linuxdesk/
 ├── start.sh               # inicializador do servidor
 ├── install.sh             # instalador automático
 └── README.md
-```
 
 ## Compatibilidade
 
