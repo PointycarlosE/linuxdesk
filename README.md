@@ -162,6 +162,98 @@ linuxdesk/
 - [ ] Compressão H.264 via VAAPI
 - [ ] Suporte a outros compositores
 
+## ⚠️ Avisos importantes
+
+### O perfil do Monique precisa ser criado manualmente
+O nome do seu monitor interno (`eDP-1`, `LVDS-1`, etc) varia de máquina para máquina.
+Por isso o perfil **LinuxDesk** no Monique precisa ser criado uma vez por você:
+
+1. Rode `linuxdesk-switch on` para ativar o Virtual-1
+2. Abra o Monique: `monique`
+3. Posicione o Virtual-1 onde quiser (direita, esquerda, cima, baixo)
+4. Salve como **"LinuxDesk"**
+5. Desative o Virtual-1 e salve como **"Notebook"**
+
+Após isso, o `linuxdesk-switch` vai alternar entre os perfis automaticamente.
+
+---
+
+### Depuração USB obrigatória no Android
+O app se comunica via ADB tunnel — sem isso, nada funciona:
+
+1. **Configurações → Sobre o dispositivo** → toque 7x em **Número da versão**
+2. **Configurações → Opções do desenvolvedor → Depuração USB** → ativar
+3. Conecte o cabo USB e confirme a autorização no Android
+
+---
+
+### Instalar o APK
+**Opção 1 — Direto no dispositivo (mais fácil):**
+1. Acesse a [página de Releases](https://github.com/PointycarlosE/linuxdesk/releases)
+2. Baixe o `linuxdesk.apk` direto no celular/tablet
+3. Abra o arquivo e instale
+4. Ative "Instalar de fontes desconhecidas" se solicitado
+
+**Opção 2 — Via ADB (requer cabo USB no Linux):**
+```bash
+adb install linuxdesk.apk
+```
+
+---
+
+### vkms some após reiniciar?
+O `install.sh` já configura o vkms para carregar no boot via `/etc/modules-load.d/vkms.conf`.
+Se mesmo assim sumir, rode manualmente:
+```bash
+sudo modprobe vkms
+```
+
+---
+
+### O app não conecta automaticamente
+Certifique-se que:
+- O servidor está rodando (`linuxdesk-switch on` ou pelo plugin Noctalia)
+- O cabo USB está conectado
+- O túnel ADB está ativo (`adb reverse --list` deve mostrar `tcp:7878`)
+- A depuração USB está ativada no Android
+
+Se ainda não conectar, tente reconectar o cabo e reabrir o app.
+
+---
+
+### Compatibilidade
+
+| Compositor | Status | Observação |
+|---|---|---|
+| Niri | ✅ Testado e funcionando | Recomendado |
+| Hyprland | ⚠️ Não testado | Pode funcionar |
+| Sway | ⚠️ Não testado | Pode funcionar |
+| KDE Plasma (Wayland) | ❌ Não compatível | Usa protocolo diferente |
+| GNOME (Wayland) | ❌ Não compatível | Não suporta wlr-screencopy |
+
+| Distro | Status |
+|---|---|
+| CachyOS | ✅ Testado |
+| Arch Linux | ⚠️ Deve funcionar |
+| EndeavourOS | ⚠️ Deve funcionar |
+| Manjaro | ⚠️ Não testado |
+| Ubuntu/Debian | ❌ grim pode não estar disponível |
+
+| Android | Status |
+|---|---|
+| Android 8.0+ | ✅ |
+| Samsung (S Pen) | ✅ Testado (Tab S6 Lite) |
+| Android < 8.0 | ❌ Não suportado |
+
+---
+
+## Known Issues
+
+- **Touch e S Pen** — implementados no código mas ainda em fase de testes. O streaming de vídeo funciona perfeitamente, o input ainda pode precisar de ajustes dependendo do dispositivo.
+- **FPS variável** — dependendo do hardware, o FPS pode variar entre 20-30. Use `QUALITY=70 SCALE=0.75` para melhorar.
+- **Tela preta no app** — geralmente indica que o servidor não está rodando ou o túnel ADB não foi configurado.
+- **Cursor invisível** — certifique-se de iniciar com `OUTPUT="Virtual-1"`, caso contrário o grim captura todos os monitores juntos.
+
 ## Créditos
 
 Pioneiro: **carlos** (CachyOS + Niri)  
