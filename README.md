@@ -36,7 +36,7 @@ o dado trafega pelo cabo USB físico, resultando em latência muito menor (~5-15
 ## Instalação rápida
 
 ```bash
-git clone https://github.com/SEU_USUARIO/linuxdesk
+git clone https://github.com/PointycarlosE/linuxdesk
 cd linuxdesk
 ./install.sh
 ```
